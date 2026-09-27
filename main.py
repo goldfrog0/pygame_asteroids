@@ -1,4 +1,6 @@
 import pygame
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 from player import Player
 from constants import (PLAYER_RADIUS, SCREEN_HEIGHT, SCREEN_WIDTH)
 from logger import (log_state)
@@ -13,7 +15,16 @@ def main():
     x = SCREEN_WIDTH/2
     y = SCREEN_HEIGHT/2
     
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable)
+    
     p1 = Player(x,y,PLAYER_RADIUS)
+    asteroid_field = AsteroidField()
     
     #temporary 
     # Game Loop
@@ -23,10 +34,10 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
-
         
-        p1.update(dt)
-        p1.draw(screen)
+        updatable.update(dt)
+        for thing in drawable:
+            thing.draw(screen)
         
         pygame.display.flip()
 
