@@ -10,19 +10,22 @@ def main():
     clock = pygame.time.Clock()
     dt = 0.0
 
-    #temporary 
     x = SCREEN_WIDTH/2
     y = SCREEN_HEIGHT/2
     
+    p1 = Player(x,y,PLAYER_RADIUS)
+    
+    #temporary 
     # Game Loop
     while True:
         log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        screen.fill("red")
+        screen.fill("black")
 
-        p1 = Player(x,y,PLAYER_RADIUS)
+        
+        p1.update(dt)
         p1.draw(screen)
         
         pygame.display.flip()
